@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Pocket Loaner",
+  "description": "A modern fintech application for quick loans and financial management, featuring real-time tracking and AI-powered financial assistance.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ]
+}

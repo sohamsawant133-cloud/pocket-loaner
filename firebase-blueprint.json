@@ -1,0 +1,104 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user personal and financial information",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Full name of the user" },
+        "email": { "type": "string", "format": "email", "description": "Email address" },
+        "pan": { "type": "string", "description": "PAN card number" },
+        "aadhaar": { "type": "string", "description": "Aadhaar number" },
+        "income": { "type": "string", "description": "Monthly income" },
+        "employment_type": { "type": "string", "description": "Employment status" },
+        "bank_account": { "type": "string", "description": "Bank account number" },
+        "kyc_status": { "type": "string", "enum": ["Pending", "Verified", "Failed"], "description": "Current KYC status" },
+        "credit_score": { "type": "integer", "description": "Calculated credit score" },
+        "risk_profile": { "type": "string", "enum": ["Low", "Moderate", "High"], "description": "Assessed risk level" }
+      },
+      "required": ["email"]
+    },
+    "KYCVerification": {
+      "title": "KYC Verification",
+      "description": "Stores KYC submission data",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string", "description": "Reference to the user" },
+        "type": { "type": "string", "description": "Type of verification (e.g., selfie, identity)" },
+        "data": { "type": "object", "description": "Verification payload" },
+        "status": { "type": "string", "description": "Verification status" },
+        "created_at": { "type": "string", "format": "date-time", "description": "Submission time" }
+      },
+      "required": ["user_id", "type", "status"]
+    },
+    "LoanApplication": {
+      "title": "Loan Application",
+      "description": "Stores loan request details",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string", "description": "Reference to the user" },
+        "provider": { "type": "string", "description": "Loan provider name" },
+        "amount": { "type": "number", "description": "Requested loan amount" },
+        "tenure": { "type": "integer", "description": "Loan tenure in months" },
+        "interest_rate": { "type": "string", "description": "Agreed interest rate" },
+        "ai_confidence": { "type": "number", "description": "AI confidence score for approval" },
+        "kyc_transaction_id": { "type": "string", "description": "Reference to the KYC transaction" },
+        "status": { "type": "string", "enum": ["Pending", "Approved", "Rejected"], "description": "Application status" },
+        "created_at": { "type": "string", "format": "date-time", "description": "Application time" }
+      },
+      "required": ["user_id", "provider", "amount", "status"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Stores financial transaction history",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string", "description": "Reference to the user" },
+        "name": { "type": "string", "description": "Transaction name or provider" },
+        "category": { "type": "string", "description": "Transaction category" },
+        "amount": { "type": "number", "description": "Transaction amount" },
+        "type": { "type": "string", "enum": ["credit", "debit"], "description": "Transaction type" },
+        "date": { "type": "string", "format": "date-time", "description": "Transaction date" }
+      },
+      "required": ["user_id", "name", "amount", "type"]
+    },
+    "AIRiskAnalysis": {
+      "title": "AI Risk Analysis",
+      "description": "Stores detailed AI-driven risk assessment",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string", "description": "Reference to the user" },
+        "loan_application_id": { "type": "string", "description": "Reference to the loan application" },
+        "risk_level": { "type": "string", "description": "Assessed risk level" },
+        "risk_score": { "type": "number", "description": "Numeric risk score" },
+        "loan_decision": { "type": "string", "description": "AI's recommendation" },
+        "risk_explanation": { "type": "string", "description": "Detailed reasoning" },
+        "ai_recommendations": { "type": "array", "items": { "type": "string" }, "description": "Actionable tips" },
+        "created_at": { "type": "string", "format": "date-time", "description": "Analysis time" }
+      },
+      "required": ["user_id", "risk_level"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/kyc_verifications/{kycId}": {
+      "schema": "KYCVerification",
+      "description": "KYC verification records"
+    },
+    "/loan_applications/{loanId}": {
+      "schema": "LoanApplication",
+      "description": "Loan application records"
+    },
+    "/transactions/{txId}": {
+      "schema": "Transaction",
+      "description": "Transaction history records"
+    },
+    "/ai_risk_analyses/{analysisId}": {
+      "schema": "AIRiskAnalysis",
+      "description": "AI risk analysis records"
+    }
+  }
+}
