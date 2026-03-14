@@ -4,10 +4,7 @@ import { getFirestore } from "firebase/firestore";
 
 import firebaseConfig from "../../firebase-applet-config.json";
 
-export const IS_DUMMY_MODE = 
-  firebaseConfig.apiKey === "YOUR_API_KEY" || 
-  !firebaseConfig.apiKey || 
-  firebaseConfig.apiKey.includes("YOUR_");
+export const IS_DUMMY_MODE = true;
 
 const app = initializeApp(firebaseConfig);
 
