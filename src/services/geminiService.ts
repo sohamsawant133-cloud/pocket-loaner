@@ -9,7 +9,7 @@ const ai = new GoogleGenAI({ apiKey: apiKey || "" });
 
 export async function getFinancialAdvice(query: string) {
   if (!apiKey) {
-    return "I'm sorry, I couldn't get financial advice at the moment because the API key is missing. Please check the application configuration.";
+    return "Financial advice service is currently unavailable. Please ensure your API key is configured in the application settings.";
   }
   try {
     const response = await ai.models.generateContent({

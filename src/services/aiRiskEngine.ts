@@ -124,7 +124,12 @@ Note: Ensure ai_recommendations are short, actionable tips that the user can fol
     });
 
     const text = response.text || "{}";
-    return JSON.parse(text);
+    try {
+      return JSON.parse(text);
+    } catch (parseError) {
+      console.error("AI Risk Engine JSON Parse Error:", parseError, "Raw text:", text);
+      throw new Error("Failed to parse AI risk analysis response.");
+    }
   } catch (error) {
     console.error("AI Risk Engine Error:", error);
     throw error;

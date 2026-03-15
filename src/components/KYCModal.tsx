@@ -178,6 +178,9 @@ export function KYCModal({ isOpen, onClose, onComplete }: KYCModalProps) {
         }
         
         try {
+          if (!auth.currentUser) {
+            throw new Error("User is not logged in.");
+          }
           if (IS_DUMMY_MODE || formData.phoneNumber === '+919999999999') {
             // Dummy OTP bypass
             console.log("Dummy OTP bypass for sending");
@@ -195,7 +198,7 @@ export function KYCModal({ isOpen, onClose, onComplete }: KYCModalProps) {
           const appVerifier = (window as any).recaptchaVerifier;
           
           const confirmation = await linkWithPhoneNumber(
-            auth.currentUser!, 
+            auth.currentUser, 
             formData.phoneNumber.replace(/\s/g, ''), 
             appVerifier
           );
