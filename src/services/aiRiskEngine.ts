@@ -1,6 +1,11 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+const apiKey = process.env.GEMINI_API_KEY;
+if (!apiKey) {
+  console.error("GEMINI_API_KEY is not defined in the environment.");
+}
+
+const ai = new GoogleGenAI({ apiKey: apiKey || '' });
 
 export interface AIRiskResult {
   kyc_status: string;
@@ -23,6 +28,9 @@ export interface AIRiskResult {
 }
 
 export const analyzeRisk = async (userData: any): Promise<AIRiskResult> => {
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not defined in the environment.");
+  }
   const model = "gemini-3-flash-preview";
   
   const { selfie, ...restUserData } = userData;

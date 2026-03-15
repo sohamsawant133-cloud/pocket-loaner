@@ -1,8 +1,16 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const apiKey = process.env.GEMINI_API_KEY;
+if (!apiKey) {
+  console.error("GEMINI_API_KEY is not defined in the environment.");
+}
+
+const ai = new GoogleGenAI({ apiKey: apiKey || "" });
 
 export async function getFinancialAdvice(query: string) {
+  if (!apiKey) {
+    return "I'm sorry, I couldn't get financial advice at the moment because the API key is missing. Please check the application configuration.";
+  }
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",

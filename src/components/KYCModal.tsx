@@ -79,7 +79,7 @@ export function KYCModal({ isOpen, onClose, onComplete }: KYCModalProps) {
       }
     } catch (err) {
       console.error("Error accessing camera:", err);
-      toast.error("Could not access camera. Please check permissions.");
+      toast.error("Camera access denied. Please grant permission in your browser settings to continue.");
     }
   };
 
